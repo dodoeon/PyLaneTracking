@@ -11,6 +11,7 @@ while True:
 
     # 만약 동영상 파일이 존재하지 않으면 while 반복문 종료
     if retval == False:
+        print("a")
         break
 
     # 'frame'이란 창 이름으로 현재 프레임 출력
