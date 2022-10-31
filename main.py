@@ -1,27 +1,34 @@
-# step1.opencv 라이브러리 불러오기
+from http.client import CannotSendHeader
 import cv2
+from cv2 import bilateralFilter
+import numpy as np
 
-# step2.동영상 파일 열기
-cap = cv2.VideoCapture('drive.mp4')
+Drive = cv2.VideoCapture('drive.mp4')
+roi = cv2.imread('roi.png')
 
-# step3.무한 반복
-while True:
-    # 동영상 파일 존재 여부(True/False)와 현재 프레임 이미지를 읽음
-    retval, frame = cap.read()
+while Drive.isOpened():
+    run, frame = Drive.read()
+    if not run:
+        print("File not found")
+        break
+    RGB = cv2.cvtColor(frame, cv2.IMREAD_COLOR)
+    HSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    lower = (13, 10, 195)
+    upper = (27, 45, 255)
 
-    # 만약 동영상 파일이 존재하지 않으면 while 반복문 종료
-    if retval == False:
-        print("a")
+    mask = cv2.bitwise_and(HSV, roi)
+    mask = cv2.inRange(mask, lower, upper)
+
+    mask = bilateralFilter(mask, -1, 10, 5)
+    mask = cv2.Canny(mask, 100, 200)
+
+    RGB = cv2.resize(RGB, (640, 360))
+    mask = cv2.resize(mask, (640, 360))
+    cv2.imshow('mask', mask)
+    cv2.imshow('video', RGB)
+    if cv2.waitKey(30) & 0xFF == ord('q'):
         break
 
-    # 'frame'이란 창 이름으로 현재 프레임 출력
-    cv2.imshow('frame', frame)
 
-    # 10초가 지나거나, ESC 키가 입력되면 while 반복문 종료
-    if cv2.waitKey(10) == 27:
-        break
-
-# step4.동영상 파일 닫고 모든창 종료
-cap.release()
-
+Drive.release()
 cv2.destroyAllWindows()
