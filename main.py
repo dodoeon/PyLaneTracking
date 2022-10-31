@@ -11,8 +11,8 @@ while Drive.isOpened():
         break
     RGB = cv2.cvtColor(frame, cv2.IMREAD_COLOR)
     HSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    lower = (0, 0, 190)
-    upper = (120, 30, 255)
+    lower = (0, 10, 195)
+    upper = (180, 35, 254)
 
     mask = cv2.bilateralFilter(HSV, 2, 10, 10)
     mask = cv2.GaussianBlur(mask, (3, 3), 0)
