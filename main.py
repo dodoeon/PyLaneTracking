@@ -9,8 +9,8 @@ roi = cv2.imread('roi_1920.png')
 def lane_detection_HSV(Frame):
     lower = (0, 5, 195)
     upper = (180, 35, 255)
-    mask = cv2.bilateralFilter(Frame, 1, 10, 10)
-    mask = cv2.GaussianBlur(mask, (3, 3), 0)
+    #mask = cv2.bilateralFilter(Frame, 1, 10, 10)
+    mask = cv2.GaussianBlur(Frame, (3, 3), 0)
 
     mask = cv2.bitwise_and(mask, roi)
     mask = cv2.inRange(mask, lower, upper)
@@ -20,8 +20,8 @@ def lane_detection_HSV(Frame):
 def lane_detection_RGB(Frame):
     lower = (190, 190, 190)
     upper = (255, 255, 255)
-    mask = cv2.bilateralFilter(Frame, 1, 10, 10)
-    mask = cv2.GaussianBlur(mask, (3, 3), 0)
+    #mask = cv2.bilateralFilter(Frame, 1, 10, 10)
+    mask = cv2.GaussianBlur(Frame, (3, 3), 0)
 
     mask = cv2.bitwise_and(mask, roi)
     mask = cv2.inRange(mask, lower, upper)
