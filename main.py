@@ -28,7 +28,7 @@ def lane_detection_RGB(Frame):
     return mask
 
 
-def draw_lines(img, lines, color=[0, 255, 0], thickness=4):
+def draw_lines(img, lines, color=[0, 0, 255], thickness=8):
     for line in lines:
         for x1, y1, x2, y2 in line:
             cv2.line(img, (x1, y1), (x2, y2), color, thickness)
